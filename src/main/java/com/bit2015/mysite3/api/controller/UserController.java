@@ -25,7 +25,6 @@ public class UserController {
 		@RequestParam( value = "email", required = true, defaultValue = "" ) String email ) {
 		
 		UserVo vo = userService.getUser( email );
-		System.out.println( vo );
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put( "result", "success" );

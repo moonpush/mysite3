@@ -3,6 +3,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="UserVo" type="com.bit2015.mysite3.vo.UserVo"></typeAlias>
+		<typeAlias alias="GuestbookVo" type="com.bit2015.mysite3.vo.GuestbookVo"></typeAlias>
     </typeAliases>
     	
 	<mappers>

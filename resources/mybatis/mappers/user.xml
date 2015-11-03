@@ -3,38 +3,52 @@
 
 <mapper namespace="user">
 	<select id="getByEmailAndPassword" parameterType="UserVo" resultType="UserVo">
+		<![CDATA[
 		select no, name, email
 		  from member
 		 where email=#{email }
            and password=#{password }
+        ]]>
 	</select>
 	
 	<insert id="insert" parameterType="UserVo">
+		<![CDATA[
 		insert
 		  into member
-	    values ( member_no_seq.nextval, #{name }, #{email }, #{password }, #{gender } )		
+	    values ( member_no_seq.nextval, #{name }, #{email }, #{password }, #{gender } )
+	    ]]>		
 	</insert>
 	
 	<select id="getByNo" parameterType="long" resultType="UserVo">
+		<![CDATA[
 		select no, name, email, gender
 		  from member
 		 where no=#{no }
+		 ]]>
 	</select>
 	
 	<select id="getByEmail" parameterType="string" resultType="UserVo">
+		<![CDATA[
 		select no, name, email, gender
 		  from member
 		 where email=#{email }
+		]]>
 	</select>	
 	
 	<update id="update" parameterType="UserVo">
+		<![CDATA[
 		update member
 		   set name = #{name },
-		   	   <if test="password != ''">	
-			   password = #{password },
-			   </if>
+		]]>   
+			<if test="password != ''">
+				<![CDATA[	
+					password = #{password },
+				]]>	
+			</if>
+		<![CDATA[	   
 			   gender = #{gender } 
 		 where no = #{no }
+		]]> 
 	</update>
 	
 </mapper>

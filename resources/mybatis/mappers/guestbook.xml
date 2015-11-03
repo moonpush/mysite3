@@ -2,4 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="guestbook">
+	<insert id="insert" parameterType="GuestbookVo">
+		<![CDATA[
+		insert
+		  into guestbook 
+		values (guestbook_seq.nextval, #{name }, #{password }, #{message }, SYSDATE )
+		]]>
+	</insert>
+	
+	<delete id="delete" parameterType="GuestbookVo">
+		<![CDATA[
+		delete
+		  from guestbook 
+		 where no=#{no } 
+		   and password=#{password }
+		]]> 
+	</delete>
+	
+	<select id="list" resultType="GuestbookVo">
+		<![CDATA[
+		  select no,
+			     name,
+			     message,
+			     to_char( reg_date, 'yyyy-MM-dd hh:mi:ss' ) as regDate
+		    from guestbook
+	    order by reg_date desc		
+		]]>
+	</select>
 </mapper>
