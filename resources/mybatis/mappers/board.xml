@@ -2,4 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="board">
+	<insert id="insert" parameterType="BoardVo">
+		<![CDATA[
+		insert
+		  into board
+		values ( board_no_seq.nextval, #{title }, #{content }, #{memberNo }, 0, nvl( ( select max( group_no ) from board ), 0) + 1, 1, 1, SYSDATE )
+		]]>
+	</insert>
 </mapper>
