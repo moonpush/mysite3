@@ -8,4 +8,27 @@
 		 where email=#{email }
            and password=#{password }
 	</select>
+	
+	<insert id="insert" parameterType="UserVo">
+		insert
+		  into member
+	    values ( member_no_seq.nextval, #{name }, #{email }, #{password }, #{gender } )		
+	</insert>
+	
+	<select id="getByNo" parameterType="long" resultType="UserVo">
+		select no, name, email, gender
+		  from member
+		 where no=#{no }
+	</select>
+	
+	<update id="update" parameterType="UserVo">
+		update member
+		   set name = #{name },
+		   	   <if test="password != ''">	
+			   password = #{password },
+			   </if>
+			   gender = #{gender } 
+		 where no = #{no }
+	</update>
+	
 </mapper>
