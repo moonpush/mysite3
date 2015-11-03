@@ -75,6 +75,21 @@ public class UserController {
 		return "/user/modifyform";
 	}
 	
+	/*
+	@RequestMapping( "/modifyform" )
+	public String modifyForm( @AuthUser UserVo authUser, Model model ) {
+		if( vo == null ) {
+			// 잘못된 호출 
+			return "redirect:/";
+		}
+		
+		UserVo vo = userService.getUser( authUser.getNo() );
+		
+		model.addAttribute( "vo", vo );
+		return "/user/modifyform";
+	}
+	*/
+	
 	@RequestMapping( value = "/modify", method = RequestMethod.POST )
 	public String modify( HttpSession session, @ModelAttribute UserVo vo ) {
 		UserVo authUser = (UserVo)session.getAttribute( "authUser" );
@@ -82,8 +97,7 @@ public class UserController {
 			/* 잘못된 호출 */
 			return "redirect:/";
 		}
-		
-		System.out.println( vo );
+
 		vo.setNo( authUser.getNo() );
 		userService.updateInfo( vo );
 		

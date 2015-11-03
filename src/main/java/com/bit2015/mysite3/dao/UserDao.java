@@ -1,15 +1,8 @@
 package com.bit2015.mysite3.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.bit2015.mysite3.vo.UserVo;
 
 @Repository
@@ -32,6 +25,11 @@ public class UserDao {
 		return vo;
 	}
 
+	public UserVo get( String email ) {
+		UserVo vo = sqlSession.selectOne( "user.getByEmail", email );
+		return vo;
+	}
+	
 	public void insert( UserVo vo ) {
 		sqlSession.insert( "user.insert", vo );
 	}

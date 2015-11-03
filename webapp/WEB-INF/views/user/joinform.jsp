@@ -54,10 +54,10 @@ $(function(){
 		}
 		//ajax 통신
 		$.ajax( {
-			url : "/mysite3/api/member",
+			url : "/mysite3/api/user/checkemail",
 			type: "get",
 			dataType: "json",
-			data: "a=checkemail&email=" + email,
+			data: "email=" + email,
 			contentType: 'application/json',
 			success: function( response ){
 				console.log( response );
