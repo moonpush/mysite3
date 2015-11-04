@@ -3,11 +3,32 @@
 
 <mapper namespace="board">
 	<insert id="insert" parameterType="BoardVo">
-		<![CDATA[
 		insert
 		  into board
-		values ( board_no_seq.nextval, #{title }, #{content }, #{memberNo }, 0, nvl( ( select max( group_no ) from board ), 0) + 1, 1, 1, SYSDATE )
-		]]>
+		<choose>
+			<when test="groupNo == null">
+				values ( board_no_seq.nextval, 
+						 #{title }, 
+						 #{content }, 
+						 #{memberNo }, 
+						 0, 
+						 nvl( ( select max( group_no ) from board ), 0) + 1, 
+						 1, 
+						 1, 
+						 SYSDATE )
+			</when>
+			<otherwise>
+				values ( board_no_seq.nextval, 
+						 #{title }, 
+						 #{content }, 
+						 #{memberNo }, 
+						 0, 
+						 #{groupNo }, 
+						 #{orderNo } + 1, 
+						 #{depth } + 1, 
+						 SYSDATE )
+			</otherwise>
+		</choose>
 	</insert>
 	
 	<select id="selectList" resultType="BoardVo">
@@ -17,11 +38,12 @@
 			     a.member_no as memberNo,
 			     b.name as memberName,
 			     a.view_cnt as viewCount,
+			     a.depth,
 			     to_char(a.reg_date, 'yyyy-mm-dd hh:mi:ss') as regDate
 		    from board a,
 			     member b
 		   where a.member_no = b.no
-		order by a.reg_date desc
+		order by a.group_no desc, a.order_no asc
 		]]>	
 	</select>
 	
@@ -65,5 +87,13 @@
          where no = #{no }
 		]]>			
 	</update>
+	
+	<update id="updateOrderNo" parameterType="long">
+		<![CDATA[
+		update board
+		   set order_no = order_no + 1		
+         where order_no > #{parentOrderNo }
+		]]>			
+	</update>	
 	
 </mapper>

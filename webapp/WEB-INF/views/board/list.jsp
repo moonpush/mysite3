@@ -31,7 +31,12 @@
 					<c:forEach items='${list }' var='vo' varStatus='status'>
 						<tr>
 							<td>${count-status.index }</td>
-							<td class="title"><a href="/mysite3/board/view/${vo.no }">${vo.title }</a></td>
+							<td class="title" style="padding-left:${( vo.depth - 1 )*10 }px">
+								<c:if test="${vo.depth > 1 }">
+									<img src="/mysite3/assets/images/ico-reply.gif">
+								</c:if>
+								<a href="/mysite3/board/view/${vo.no }">${vo.title }</a>
+							</td>
 							<td>${vo.memberName }</td>
 							<td>${vo.viewCount }</td>
 							<td>${vo.regDate }</td>
