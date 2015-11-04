@@ -28,7 +28,7 @@ public class BoardDao {
 	public void insert( BoardVo vo ) {
 		if( vo.getGroupNo() == null ) {
 			// 답글인 경우,
-			sqlSession.update( "board.updateOrderNo", vo );
+			// sqlSession.update( "board.updateOrderNo", vo );
 		}
 		
 		sqlSession.insert( "board.insert", vo );

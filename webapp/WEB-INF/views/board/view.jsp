@@ -38,7 +38,7 @@
 						<a href="/mysite3/board/modify/${vo.no }">글수정</a>
 					</c:if>
 					<c:if test='${not empty authUser }'>
-						<a href="/mysite3/board/reply?gn=${vo.groupNo }&on=${vo.orderNo }&d=${vo.depth }">답글</a>
+						<a href="/mysite3/board/reply/${vo.no }">답글</a>
 					</c:if>
 				</div>
 			</div>

@@ -30,9 +30,9 @@ $(function(){
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post" action="/mysite3/board/insert">
-					<input type="hidden" name="gn" value="${param.gn }">
-					<input type="hidden" name="on" value="${param.on }">
-					<input type="hidden" name="d" value="${param.d }">
+					<input type="hidden" name="groupNo" value="${vo.groupNo }">
+					<input type="hidden" name="orderNo" value="${vo.orderNo }">
+					<input type="hidden" name="depth" value="${vo.depth }">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
