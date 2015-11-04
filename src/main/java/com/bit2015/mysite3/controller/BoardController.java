@@ -1,6 +1,6 @@
 package com.bit2015.mysite3.controller;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bit2015.mysite3.service.BoardService;
 import com.bit2015.mysite3.vo.BoardVo;
@@ -23,9 +24,13 @@ public class BoardController {
 	
 	// 리스트 요청
 	@RequestMapping( "" )
-	public String list( Model model ) {
-		List<BoardVo> list = boardService.listBoard();
-		model.addAttribute( "list", list );
+	public String list( 
+		@RequestParam( value="sp", required = true, defaultValue = "1" ) int stratPage,
+		@RequestParam( value="cp", required = true, defaultValue = "1" ) int currentPage,
+		Model model ) {
+		
+		Map<String, Object> map = boardService.listBoard( stratPage, currentPage );
+		model.addAttribute( "listData", map );
 		
 		return "/board/list";
 	}

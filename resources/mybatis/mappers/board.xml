@@ -61,6 +61,12 @@
 		]]>
 	</select>
 	
+	<select id="selectCount" resultType="long" >
+		<![CDATA[
+		select count(*) from board
+		]]>
+	</select>	
+	
 	<delete id="delete" parameterType="map">
 		<![CDATA[
 		delete

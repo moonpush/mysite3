@@ -49,5 +49,10 @@ public class BoardDao {
 	public BoardVo get( Long no ) {
 		BoardVo vo = sqlSession.selectOne( "board.selectByNo", no );
 		return vo;
+	}
+	
+	public Long getCount() {
+		Long count = sqlSession.selectOne( "board.selectCount" );
+		return count;
 	}	
 }

@@ -27,8 +27,8 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
-					<c:set var='count' value='${fn:length(list) }' />				
-					<c:forEach items='${list }' var='vo' varStatus='status'>
+					<c:set var='count' value='${fn:length(listData.list) }' />				
+					<c:forEach items='${listData.list }' var='vo' varStatus='status'>
 						<tr>
 							<td>${count-status.index }</td>
 							<td class="title" style="padding-left:${( vo.depth - 1 )*10 }px">
