@@ -2,13 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="guestbook">
-	<insert id="insert" parameterType="GuestbookVo">
-		<![CDATA[
-		insert
-		  into guestbook 
-		values (guestbook_seq.nextval, #{name }, #{password }, #{message }, SYSDATE )
-		]]>
-	</insert>
+
 	
 	<delete id="delete" parameterType="GuestbookVo">
 		<![CDATA[
@@ -29,4 +23,14 @@
 	    order by reg_date desc		
 		]]>
 	</select>
+	
+	<insert id="insert" parameterType="GuestbookVo">
+		<selectKey keyProperty="no" resultType="long" order="BEFORE">
+			select guestbook_seq.nextval from dual
+			<!-- call next value for guestbook_seq -->	
+		</selectKey>
+		insert
+          into guestbook
+        values ( #{no }, #{name }, #{password }, #{message }, SYSDATE )
+	</insert>	
 </mapper>

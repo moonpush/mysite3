@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 @import "mysite.css";
 
-#board { margin:20px auto;	width:550px; }
+#board { margin:20px auto; width:550px; }
 
 
 #search_form {
@@ -89,8 +89,7 @@ input#kwd	{
 }
 
 tr.even td	{ background-color:#e8ecf6 }
-
-.tbl-ex a { text-decoration:none; font-weight:bold; }
+.tbl-ex a	{ color:#666; text-decoration:none; font-weight:bold; }
 
 div.bottom {
 	width:100%;
@@ -135,3 +134,17 @@ a.del	{
 	background:url("/mysite3/assets/images/recycle.png") no-repeat 0 0;
 	font-size:0;
 }
+
+
+/*
+	pager
+*/
+#board .pager		{ width:100%; text-align:center; padding:10px 0 }
+#board .pager ul	{ margin:0 auto }
+#board .pager ul li	{ color:#ff1e1e; display:inline; margin-left:15px; font-weight:bold; font-family: '돋움',dotum,Helvetica,sans-serif; }
+#board .pager a:link,
+#board .pager a:visited,
+#board .pager a:active,
+#board .pager a:hover { color:#666; text-decoration:none }
+
+	

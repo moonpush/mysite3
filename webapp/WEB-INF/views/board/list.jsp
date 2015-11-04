@@ -53,6 +53,17 @@
 						</tr>
 					</c:forEach>
 				</table>
+				<div class="pager">
+					<ul>
+						<li class="pg-prev"><a href="">◀ 이전</a></li>
+						<li><a href="">11</a></li>
+						<li><a href="">12</a></li>
+						<li>13</li>
+						<li><a href="">14</a></li>
+						<li><a href="">15</a></li>
+						<li class="pg-next"><a href="">다음 ▶</a></li>
+					</ul>
+				</div>
 				<div class="bottom">
 					<c:if test='${not empty authUser }'>
 						<a href="/mysite3/board/write" id="new-book">글쓰기</a>
