@@ -20,7 +20,7 @@ values ( board_no_seq.nextval,
 -------------------------------------------------
 
 -- 문장열 더하기 연산자 ||
-select title || '+++++++++++++++' || content from board;
+select * from board;
 
 -- nvl 함수
 select nvl( null, 0 ) from dual;

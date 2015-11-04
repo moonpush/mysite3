@@ -16,17 +16,17 @@ public class UserDao {
 	}
 	
 	public UserVo get( UserVo vo ) {
-		UserVo userVo = sqlSession.selectOne( "user.getByEmailAndPassword",  vo );
+		UserVo userVo = sqlSession.selectOne( "user.selectByEmailAndPassword",  vo );
 		return userVo;
 	}
 
 	public UserVo get( Long no ) {
-		UserVo vo = sqlSession.selectOne( "user.getByNo", no );
+		UserVo vo = sqlSession.selectOne( "user.selectByNo", no );
 		return vo;
 	}
 
 	public UserVo get( String email ) {
-		UserVo vo = sqlSession.selectOne( "user.getByEmail", email );
+		UserVo vo = sqlSession.selectOne( "user.selectByEmail", email );
 		return vo;
 	}
 	

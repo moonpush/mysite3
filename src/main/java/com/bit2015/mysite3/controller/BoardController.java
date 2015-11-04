@@ -28,9 +28,9 @@ public class BoardController {
 		return "/board/list";
 	}
 	
-	@RequestMapping( "/writeform" )
-	public String list() {
-		return "/board/writeform";
+	@RequestMapping( { "/write", "/reply" } )
+	public String write() {
+		return "/board/write";
 	}
 	
 	@RequestMapping( "/insert" )
@@ -45,10 +45,41 @@ public class BoardController {
 		return "redirect:/board";
 	}
 	
+	@RequestMapping( "/update" )
+	public String update( HttpSession session, @ModelAttribute BoardVo vo ) {
+		UserVo authUser = (UserVo)session.getAttribute( "authUser" );
+		if( authUser == null ) {
+			return "redirect:/board";
+		}
+		
+		vo.setMemberNo( authUser.getNo() );
+		boardService.updateBoard( vo );
+		return "redirect:/board";
+	}
+	
+	@RequestMapping( "/delete/{no}" )
+	public String delete( HttpSession session, @PathVariable( "no" ) Long no ) {
+		UserVo authUser = (UserVo)session.getAttribute( "authUser" );
+		if( authUser == null ) {
+			return "redirect:/board";
+		}
+		
+		boardService.deleteBoard( no, authUser.getNo() );
+		
+		return "redirect:/board";
+	}	
+	
 	@RequestMapping( "/view/{no}" )
 	public String view( @PathVariable( "no" ) Long no, Model model ) {
 		BoardVo vo = boardService.viewBoard( no );
 		model.addAttribute( "vo", vo );
 		return "/board/view";
+	}
+	
+	@RequestMapping( "/modify/{no}" )
+	public String modify( @PathVariable( "no" ) Long no, Model model ) {
+		BoardVo vo = boardService.viewBoard( no );
+		model.addAttribute( "vo", vo );
+		return "/board/modify";
 	}	
 }

@@ -6,10 +6,10 @@ public class BoardVo {
 	private String content;
 	private Long memberNo;
 	private String memberName;
-	private int viewCount;
-	private int groupNo;
-	private int orderNo;
-	private int depth;
+	private Long viewCount;
+	private Long groupNo;
+	private Long orderNo;
+	private Long depth;
 	private String regDate;
 	
 	public Long getNo() {
@@ -42,10 +42,10 @@ public class BoardVo {
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
 	}
-	public int getViewCount() {
+	public Long getViewCount() {
 		return viewCount;
 	}
-	public void setViewCount(int viewCount) {
+	public void setViewCount(Long viewCount) {
 		this.viewCount = viewCount;
 	}
 	public String getRegDate() {
@@ -54,22 +54,22 @@ public class BoardVo {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
-	public int getGroupNo() {
+	public Long getGroupNo() {
 		return groupNo;
 	}
-	public void setGroupNo(int groupNo) {
+	public void setGroupNo(Long groupNo) {
 		this.groupNo = groupNo;
 	}
-	public int getOrderNo() {
+	public Long getOrderNo() {
 		return orderNo;
 	}
-	public void setOrderNo(int orderNo) {
+	public void setOrderNo(Long orderNo) {
 		this.orderNo = orderNo;
 	}
-	public int getDepth() {
+	public Long getDepth() {
 		return depth;
 	}
-	public void setDepth(int depth) {
+	public void setDepth(Long depth) {
 		this.depth = depth;
 	}
 	@Override

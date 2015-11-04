@@ -9,4 +9,61 @@
 		values ( board_no_seq.nextval, #{title }, #{content }, #{memberNo }, 0, nvl( ( select max( group_no ) from board ), 0) + 1, 1, 1, SYSDATE )
 		]]>
 	</insert>
+	
+	<select id="selectList" resultType="BoardVo">
+		<![CDATA[
+		  select a.no,
+			     a.title,
+			     a.member_no as memberNo,
+			     b.name as memberName,
+			     a.view_cnt as viewCount,
+			     to_char(a.reg_date, 'yyyy-mm-dd hh:mi:ss') as regDate
+		    from board a,
+			     member b
+		   where a.member_no = b.no
+		order by a.reg_date desc
+		]]>	
+	</select>
+	
+	<select id="selectByNo" resultType="BoardVo" parameterType="long">
+		<![CDATA[
+		select no,
+			   title,
+			   content,
+			   member_no as memberNo,
+			   group_no as groupNo,
+			   order_no as orderNo,
+			   depth
+		  from board
+		 where no=#{no }			
+		]]>
+	</select>
+	
+	<delete id="delete" parameterType="map">
+		<![CDATA[
+		delete
+		  from board
+		 where no = #{no }
+		   and member_no = #{memberNo }
+		]]>
+	</delete>
+	
+	<update id="update" parameterType="BoardVo">
+		<![CDATA[
+		update board
+		   set title = #{title },
+			   content = #{content }
+         where no = #{no }
+           and member_no = #{memberNo }
+		]]>			
+	</update>
+		
+	<update id="updateViewCount" parameterType="long">
+		<![CDATA[
+		update board
+		   set view_cnt = view_cnt + 1		
+         where no = #{no }
+		]]>			
+	</update>
+	
 </mapper>

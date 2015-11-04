@@ -38,7 +38,7 @@
 							<td>
 								<c:choose>
 									<c:when test='${authUser.no == vo.memberNo }'>									
-										<a href="/mysite3/board/delete&/${vo.no }" class="del">삭제</a>
+										<a href="/mysite3/board/delete/${vo.no }" class="del">삭제</a>
 									</c:when>
 									<c:otherwise>
 										&nbsp;
@@ -50,7 +50,7 @@
 				</table>
 				<div class="bottom">
 					<c:if test='${not empty authUser }'>
-						<a href="/mysite3/board/writeform" id="new-book">글쓰기</a>
+						<a href="/mysite3/board/write" id="new-book">글쓰기</a>
 					</c:if>
 				</div>				
 			</div>

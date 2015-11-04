@@ -23,8 +23,17 @@ public class BoardService {
 		boardDao.insert( vo );
 	}
 	
+	public void updateBoard( BoardVo vo ){
+		boardDao.update( vo );
+	}	
+
+	public void deleteBoard( Long no, Long memberNo ){
+		boardDao.delete( no, memberNo );
+	}	
+
 	public BoardVo viewBoard( Long no ){
 		BoardVo vo = boardDao.get( no );
+		boardDao.updateViewCount( no );
 		return vo;
 	}
 }
