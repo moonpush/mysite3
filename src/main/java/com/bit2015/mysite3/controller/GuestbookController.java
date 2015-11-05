@@ -25,22 +25,4 @@ public class GuestbookController {
 		model.addAttribute( "list", list );
 		return "/guestbook/list";
 	}
-	
-	@RequestMapping( "/deleteform/{no}" )
-	public String list( @PathVariable( "no" ) Long no, Model model ) {
-		model.addAttribute( "no", no );
-		return "/guestbook/deleteform";
-	}
-
-	@RequestMapping( "/insert" )
-	public String insert( @ModelAttribute GuestbookVo vo ) {
-		guestbookService.writeMessage(vo);
-		return "redirect:/guestbook";
-	}	
-
-	@RequestMapping( "/delete" )
-	public String list( @ModelAttribute GuestbookVo vo, Model model ) {
-		guestbookService.deleteMessage(vo);
-		return "redirect:/guestbook";
-	}	
 }

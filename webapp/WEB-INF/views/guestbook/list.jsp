@@ -27,7 +27,7 @@ var fetchList = function() {
 				console.error( response.message );
 				return;
 			}
-			//redering
+			//rendering
 			$.each( response.data, function(index, data){
 				insertMessage( data, false );
 			});
