@@ -20,7 +20,7 @@ public class BoardService {
 	
 	public Map<String, Object> listBoard( Long page ){
 
-		//1. calculate pager
+		//1. calculate pager's basic data 
 		long totalCount = boardDao.getCount();
 		long pageCount = (long)Math.ceil( (double)totalCount / LIST_PAGESIZE );
 		long blockCount = (long)Math.ceil( (double)pageCount / LIST_BLOCKSIZE );
@@ -35,15 +35,16 @@ public class BoardService {
 			currentBlock = (int)Math.ceil( (double)page / LIST_BLOCKSIZE );
 		}
 		
+		//3. calculate pager's data
 		long startPage = ( currentBlock - 1 ) * LIST_BLOCKSIZE + 1;
 		long endPage = ( startPage - 1 ) + LIST_BLOCKSIZE;
 		long prevPage = ( currentBlock > 1 ) ? ( currentBlock - 1 ) * LIST_BLOCKSIZE : 0;
 		long nextPage = ( currentBlock < blockCount ) ? currentBlock * LIST_BLOCKSIZE + 1 : 0;
 
-		//3. list 가져오기
+		//4. fetch list
 		List<BoardVo> list = boardDao.getList( page, LIST_PAGESIZE );
 		
-		//4. pack all information of list
+		//5. pack all information of list
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put( "list", list );
 		map.put( "firstItemIndex", totalCount - ( page - 1 ) * LIST_PAGESIZE );
