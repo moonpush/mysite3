@@ -26,7 +26,6 @@ public class BoardService {
 		long blockCount = (long)Math.ceil( (double)pageCount / LIST_BLOCKSIZE );
 		long currentBlock = (long)Math.ceil( (double)page / LIST_BLOCKSIZE ); 
 		
-		System.out.println( totalCount + ":" );
 		//2. page validation
 		if( page < 1 ) {
 			page = 1L;

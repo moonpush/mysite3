@@ -27,14 +27,8 @@ public class BoardDao {
 		map.put( "pageSize", pageSize );
 		
 		List<BoardVo> list = sqlSession.selectList( "board.selectList", map );
-		
 		return list;
 	}
-	
-	public Long getCount() {
-		Long count = sqlSession.selectOne( "board.selectCount" );
-		return count;
-	}	
 
 	public Long getCount( String searchKeyword ) {
 		Map<String, Object> map = new HashMap<String, Object>();

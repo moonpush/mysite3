@@ -10,28 +10,12 @@
 		<choose>
 			<when test="groupNo == null">
 				<![CDATA[
-				values ( board_no_seq.nextval, 
-						 #{title }, 
-						 #{content }, 
-						 #{memberNo }, 
-						 0, 
-						 nvl( ( select max( group_no ) from board ), 0) + 1, 
-						 1, 
-						 1, 
-						 SYSDATE )
+				values ( board_no_seq.nextval, #{title }, #{content }, #{memberNo }, 0, nvl( ( select max( group_no ) from board ), 0) + 1, 1, 1, SYSDATE )
 				]]>			 
 			</when>
 			<otherwise>
 				<![CDATA[
-				values ( board_no_seq.nextval, 
-						 #{title }, 
-						 #{content }, 
-						 #{memberNo }, 
-						 0, 
-						 #{groupNo }, 
-						 #{orderNo } + 1, 
-						 #{depth } + 1, 
-						 SYSDATE )
+				values ( board_no_seq.nextval, #{title }, #{content }, #{memberNo }, 0, #{groupNo }, #{orderNo } + 1, #{depth } + 1, SYSDATE )
 				]]>		 
 			</otherwise>
 		</choose>
@@ -40,27 +24,18 @@
 	<select id="selectList" resultType="BoardVo" parameterType="map">
 		<![CDATA[
 		SELECT * 
-		  FROM ( SELECT rownum as rnum, 
-				        C.* 
-				   FROM (   SELECT A.no,
-								 A.title,
-								 A.member_no as memberNo,
-								 B.name as memberName,
-								 A.view_cnt as viewCount,
-								 A.depth,
-								 to_char( A.reg_date, 'yyyy-mm-dd hh:mi:ss' ) as regDate 
-							  FROM board A,
-							  	  member B
-						     WHERE A.member_no = B.no
+		  FROM ( SELECT rownum as rnum, C.* 
+				   FROM ( SELECT A.no, A.title, A.member_no as memberNo, B.name as memberName, A.view_cnt as viewCount, A.depth, to_char( A.reg_date, 'yyyy-mm-dd hh:mi:ss' ) as regDate 
+						    FROM board A, member B
+						   WHERE A.member_no = B.no
 		]]>
 		<if test="searchKeyword != ''">
-		<![CDATA[				     
-		
+			<![CDATA[				     
 						     AND ( A.title LIKE '%${searchKeyword }%' OR A.content LIKE '%${searchKeyword }%' )
-		]]>
+			]]>
 		</if>				     
 		<![CDATA[				     
-						  ORDER BY group_no DESC,  order_no  ASC ) C )
+						ORDER BY group_no DESC,  order_no  ASC ) C )
 	     WHERE ( #{page } - 1 ) * #{pageSize } + 1 <= rnum AND rnum <=  #{page } * #{pageSize }
 		]]>	
 	</select>
@@ -71,22 +46,15 @@
 		  from board
 		]]>
 		<if test="searchKeyword != ''">
-		<![CDATA[				     
-		
-		 where ( title like '%${searchKeyword }%' or content like '%${searchKeyword }%' )
-		]]>
+			<![CDATA[				     
+			 where ( title like '%${searchKeyword }%' or content like '%${searchKeyword }%' )
+			]]>
 		</if>		
 	</select>
 		
 	<select id="selectByNo" resultType="BoardVo" parameterType="long">
 		<![CDATA[
-		select no,
-			   title,
-			   content,
-			   member_no as memberNo,
-			   group_no as groupNo,
-			   order_no as orderNo,
-			   depth
+		select no, title, content, member_no as memberNo, group_no as groupNo, order_no as orderNo, depth
 		  from board
 		 where no=#{no }			
 		]]>
@@ -104,8 +72,7 @@
 	<update id="update" parameterType="BoardVo">
 		<![CDATA[
 		update board
-		   set title = #{title },
-			   content = #{content }
+		   set title = #{title }, content = #{content }
          where no = #{no }
            and member_no = #{memberNo }
 		]]>			

@@ -31,8 +31,6 @@ public class BoardController {
 		
 		Map<String, Object> map = boardService.listBoard( searchKeyword, page );
 		model.addAttribute( "listData", map );
-
-		System.out.println( searchKeyword );
 		
 		return "/board/list";
 	}
