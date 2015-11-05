@@ -31,19 +31,23 @@
 		</choose>
 	</insert>
 	
-	<select id="selectList" resultType="BoardVo">
+	<select id="selectList" resultType="BoardVo" parameterType="map">
 		<![CDATA[
-		  select a.no,
-			     a.title,
-			     a.member_no as memberNo,
-			     b.name as memberName,
-			     a.view_cnt as viewCount,
-			     a.depth,
-			     to_char(a.reg_date, 'yyyy-mm-dd hh:mi:ss') as regDate
-		    from board a,
-			     member b
-		   where a.member_no = b.no
-		order by a.group_no desc, a.order_no asc
+		SELECT * 
+		  FROM ( SELECT rownum as rnum, 
+				        C.* 
+				   FROM (   SELECT A.no,
+								 A.title,
+								 A.member_no as memberNo,
+								 B.name as memberName,
+								 A.view_cnt as viewCount,
+								 A.depth,
+								 to_char( A.reg_date, 'yyyy-mm-dd hh:mi:ss' ) as regDate 
+							  FROM board A,
+							  	  member B
+						     WHERE A.member_no = B.no
+						  ORDER BY group_no DESC,  order_no  ASC ) C )
+	     WHERE ( #{page } - 1 ) * #{pageSize } + 1 <= rnum AND rnum <=  #{page } * #{pageSize }
 		]]>	
 	</select>
 	

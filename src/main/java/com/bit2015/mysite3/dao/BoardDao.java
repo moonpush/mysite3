@@ -20,8 +20,13 @@ public class BoardDao {
 		sqlSession.update( "board.update", vo );
 	}
 	
-	public List<BoardVo> getList() {
-		List<BoardVo> list = sqlSession.selectList( "board.selectList" );
+	public List<BoardVo> getList( Long page, Integer pageSize ) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put( "page", page );
+		map.put( "pageSize", pageSize );
+		
+		List<BoardVo> list = sqlSession.selectList( "board.selectList", map );
+		
 		return list;
 	}
 

@@ -12,39 +12,47 @@ import com.bit2015.mysite3.vo.BoardVo;
 
 @Service
 public class BoardService {
+	private final int LIST_PAGESIZE = 10;
+	private final int LIST_BLOCKSIZE = 5;
 	
 	@Autowired
 	private BoardDao boardDao;
 	
-	public Map<String, Object> listBoard( int startPage, int currentPage ){
-		final int PAGE_SIZE = 10;
-		final int BLOCK_SIZE = 5;
-		
-		//list 가져오기
-		List<BoardVo> list = boardDao.getList();
+	public Map<String, Object> listBoard( Long page ){
 
-		//
-		Long totalCount = boardDao.getCount();
-				
-		/* pager 계산 */
-		boolean hasPrev = false;
-		boolean hasNext = true;
+		//1. calculate pager
+		long totalCount = boardDao.getCount();
+		long pageCount = (long)Math.ceil( (double)totalCount / LIST_PAGESIZE );
+		long blockCount = (long)Math.ceil( (double)pageCount / LIST_BLOCKSIZE );
+		long currentBlock = (long)Math.ceil( (double)page / LIST_BLOCKSIZE ); 
 		
-		int totalPage = (int)Math.ceil( totalCount/PAGE_SIZE );
+		//2. page validation
+		if( page < 1 ) {
+			page = 1L;
+			currentBlock = 1;
+		} else if( page > pageCount ) {
+			page = pageCount;
+			currentBlock = (int)Math.ceil( (double)page / LIST_BLOCKSIZE );
+		}
 		
-		// start page 결정
+		long startPage = ( currentBlock - 1 ) * LIST_BLOCKSIZE + 1;
+		long endPage = ( startPage - 1 ) + LIST_BLOCKSIZE;
+		long prevPage = ( currentBlock > 1 ) ? ( currentBlock - 1 ) * LIST_BLOCKSIZE : 0;
+		long nextPage = ( currentBlock < blockCount ) ? currentBlock * LIST_BLOCKSIZE + 1 : 0;
+
+		//3. list 가져오기
+		List<BoardVo> list = boardDao.getList( page, LIST_PAGESIZE );
 		
-		// endpage 결정
-		int endPage = startPage + BLOCK_SIZE;
-		
-		//
+		//4. pack all information of list
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put( "list", list );
-		map.put( "currentPage", currentPage );
+		map.put( "firstItemIndex", totalCount - ( page - 1 ) * LIST_PAGESIZE );
+		map.put( "currentPage", page );
 		map.put( "startPage", startPage );
 		map.put( "endPage", endPage );
-		map.put( "hasPrev", hasPrev );
-		map.put( "hasNext", hasNext );
+		map.put( "pageCount", pageCount );
+		map.put( "prevPage", prevPage );
+		map.put( "nextPage", nextPage );
 		
 		return map;
 	}

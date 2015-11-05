@@ -25,11 +25,10 @@ public class BoardController {
 	// 리스트 요청
 	@RequestMapping( "" )
 	public String list( 
-		@RequestParam( value="sp", required = true, defaultValue = "1" ) int stratPage,
-		@RequestParam( value="cp", required = true, defaultValue = "1" ) int currentPage,
+		@RequestParam( value="p", required = true, defaultValue = "1" ) Long page,
 		Model model ) {
 		
-		Map<String, Object> map = boardService.listBoard( stratPage, currentPage );
+		Map<String, Object> map = boardService.listBoard( page );
 		model.addAttribute( "listData", map );
 		
 		return "/board/list";

@@ -30,7 +30,7 @@
 					<c:set var='count' value='${fn:length(listData.list) }' />				
 					<c:forEach items='${listData.list }' var='vo' varStatus='status'>
 						<tr>
-							<td>${count-status.index }</td>
+							<td>${listData.firstItemIndex - status.index }</td>
 							<td class="title" style="padding-left:${( vo.depth - 1 )*10 }px">
 								<c:if test="${vo.depth > 1 }">
 									<img src="/mysite3/assets/images/ico-reply.gif">
@@ -55,13 +55,29 @@
 				</table>
 				<div class="pager">
 					<ul>
-						<li class="pg-prev"><a href="">◀ 이전</a></li>
-						<li><a href="">11</a></li>
-						<li><a href="">12</a></li>
-						<li>13</li>
-						<li><a href="">14</a></li>
-						<li><a href="">15</a></li>
-						<li class="pg-next"><a href="">다음 ▶</a></li>
+						<c:if test="${listData.prevPage > 0 }">
+							<li class="pg-prev"><a href="/mysite3/board?p=${listData.prevPage }">◀ 이전</a></li>
+						</c:if>
+						<c:forEach begin="${listData.startPage }" end="${listData.endPage }" var="pageIndex" step="1">
+							<c:choose>
+								<c:when test="${pageIndex > listData.pageCount }">
+									<li class="disable">${pageIndex }</li>
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${pageIndex == listData.currentPage }">
+											<li>${pageIndex }</li>
+										</c:when>
+										<c:otherwise>
+											<li><a href="/mysite3/board?p=${pageIndex }">${pageIndex }</a></li>
+										</c:otherwise>
+									</c:choose>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${listData.nextPage > 0 }">
+							<li class="pg-next"><a href="/mysite3/board?p=${listData.nextPage }">다음 ▶</a></li>
+						</c:if>	
 					</ul>
 				</div>
 				<div class="bottom">
