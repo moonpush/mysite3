@@ -12,20 +12,21 @@ import com.bit2015.mysite3.vo.BoardVo;
 
 @Service
 public class BoardService {
-	private final int LIST_PAGESIZE = 10;
+	private final int LIST_PAGESIZE = 5;
 	private final int LIST_BLOCKSIZE = 5;
 	
 	@Autowired
 	private BoardDao boardDao;
 	
-	public Map<String, Object> listBoard( Long page ){
+	public Map<String, Object> listBoard( String searchKeyword, Long page ){
 
 		//1. calculate pager's basic data 
-		long totalCount = boardDao.getCount();
+		long totalCount = boardDao.getCount( searchKeyword );
 		long pageCount = (long)Math.ceil( (double)totalCount / LIST_PAGESIZE );
 		long blockCount = (long)Math.ceil( (double)pageCount / LIST_BLOCKSIZE );
 		long currentBlock = (long)Math.ceil( (double)page / LIST_BLOCKSIZE ); 
 		
+		System.out.println( totalCount + ":" );
 		//2. page validation
 		if( page < 1 ) {
 			page = 1L;
@@ -42,11 +43,12 @@ public class BoardService {
 		long nextPage = ( currentBlock < blockCount ) ? currentBlock * LIST_BLOCKSIZE + 1 : 0;
 
 		//4. fetch list
-		List<BoardVo> list = boardDao.getList( page, LIST_PAGESIZE );
+		List<BoardVo> list = boardDao.getList( searchKeyword, page, LIST_PAGESIZE );
 		
 		//5. pack all information of list
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put( "list", list );
+		map.put( "searchKeyword", searchKeyword );
 		map.put( "firstItemIndex", totalCount - ( page - 1 ) * LIST_PAGESIZE );
 		map.put( "currentPage", page );
 		map.put( "startPage", startPage );

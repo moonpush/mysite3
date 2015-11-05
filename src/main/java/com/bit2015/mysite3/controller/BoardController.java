@@ -25,11 +25,14 @@ public class BoardController {
 	// 리스트 요청
 	@RequestMapping( "" )
 	public String list( 
+		@RequestParam( value="kw", required = true, defaultValue = "" ) String searchKeyword,
 		@RequestParam( value="p", required = true, defaultValue = "1" ) Long page,
 		Model model ) {
 		
-		Map<String, Object> map = boardService.listBoard( page );
+		Map<String, Object> map = boardService.listBoard( searchKeyword, page );
 		model.addAttribute( "listData", map );
+
+		System.out.println( searchKeyword );
 		
 		return "/board/list";
 	}

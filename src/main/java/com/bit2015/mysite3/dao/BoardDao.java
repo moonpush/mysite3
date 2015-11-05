@@ -20,8 +20,9 @@ public class BoardDao {
 		sqlSession.update( "board.update", vo );
 	}
 	
-	public List<BoardVo> getList( Long page, Integer pageSize ) {
+	public List<BoardVo> getList( String searchKeyword, Long page, Integer pageSize ) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put( "searchKeyword", searchKeyword );
 		map.put( "page", page );
 		map.put( "pageSize", pageSize );
 		
@@ -29,7 +30,20 @@ public class BoardDao {
 		
 		return list;
 	}
+	
+	public Long getCount() {
+		Long count = sqlSession.selectOne( "board.selectCount" );
+		return count;
+	}	
 
+	public Long getCount( String searchKeyword ) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put( "searchKeyword", searchKeyword );
+		
+		Long count = sqlSession.selectOne( "board.selectCount", map );
+		return count;
+	}	
+	
 	public void insert( BoardVo vo ) {
 		Long groupNo = vo.getGroupNo();
 		if( groupNo != null ) { // 답글인 경우
@@ -55,9 +69,4 @@ public class BoardDao {
 		BoardVo vo = sqlSession.selectOne( "board.selectByNo", no );
 		return vo;
 	}
-	
-	public Long getCount() {
-		Long count = sqlSession.selectOne( "board.selectCount" );
-		return count;
-	}	
 }

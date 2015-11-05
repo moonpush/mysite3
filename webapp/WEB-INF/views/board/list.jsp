@@ -14,8 +14,8 @@
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
+				<form id="search_form" action="/mysite3/board" method="get">
+					<input type="text" name="kw" value="${listData.searchKeyword }">
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -56,7 +56,7 @@
 				<div class="pager">
 					<ul>
 						<c:if test="${listData.prevPage > 0 }">
-							<li class="pg-prev"><a href="/mysite3/board?p=${listData.prevPage }">◀ 이전</a></li>
+							<li class="pg-prev"><a href="/mysite3/board?p=${listData.prevPage }&kw=${listData.searchKeyword }">◀ 이전</a></li>
 						</c:if>
 						<c:forEach begin="${listData.startPage }" end="${listData.endPage }" var="pageIndex" step="1">
 							<c:choose>
@@ -69,14 +69,14 @@
 											<li>${pageIndex }</li>
 										</c:when>
 										<c:otherwise>
-											<li><a href="/mysite3/board?p=${pageIndex }">${pageIndex }</a></li>
+											<li><a href="/mysite3/board?p=${pageIndex }&kw=${listData.searchKeyword }">${pageIndex }</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
 						<c:if test="${listData.nextPage > 0 }">
-							<li class="pg-next"><a href="/mysite3/board?p=${listData.nextPage }">다음 ▶</a></li>
+							<li class="pg-next"><a href="/mysite3/board?p=${listData.nextPage }&kw=${listData.searchKeyword }">다음 ▶</a></li>
 						</c:if>	
 					</ul>
 				</div>

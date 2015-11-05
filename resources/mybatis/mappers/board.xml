@@ -3,10 +3,13 @@
 
 <mapper namespace="board">
 	<insert id="insert" parameterType="BoardVo">
+		<![CDATA[
 		insert
 		  into board
+		]]>  
 		<choose>
 			<when test="groupNo == null">
+				<![CDATA[
 				values ( board_no_seq.nextval, 
 						 #{title }, 
 						 #{content }, 
@@ -16,8 +19,10 @@
 						 1, 
 						 1, 
 						 SYSDATE )
+				]]>			 
 			</when>
 			<otherwise>
+				<![CDATA[
 				values ( board_no_seq.nextval, 
 						 #{title }, 
 						 #{content }, 
@@ -27,6 +32,7 @@
 						 #{orderNo } + 1, 
 						 #{depth } + 1, 
 						 SYSDATE )
+				]]>		 
 			</otherwise>
 		</choose>
 	</insert>
@@ -46,11 +52,32 @@
 							  FROM board A,
 							  	  member B
 						     WHERE A.member_no = B.no
+		]]>
+		<if test="searchKeyword != ''">
+		<![CDATA[				     
+		
+						     AND ( A.title LIKE '%${searchKeyword }%' OR A.content LIKE '%${searchKeyword }%' )
+		]]>
+		</if>				     
+		<![CDATA[				     
 						  ORDER BY group_no DESC,  order_no  ASC ) C )
 	     WHERE ( #{page } - 1 ) * #{pageSize } + 1 <= rnum AND rnum <=  #{page } * #{pageSize }
 		]]>	
 	</select>
 	
+	<select id="selectCount" resultType="long" parameterType="map">
+		<![CDATA[
+		select count(*) 
+		  from board
+		]]>
+		<if test="searchKeyword != ''">
+		<![CDATA[				     
+		
+		 where ( title like '%${searchKeyword }%' or content like '%${searchKeyword }%' )
+		]]>
+		</if>		
+	</select>
+		
 	<select id="selectByNo" resultType="BoardVo" parameterType="long">
 		<![CDATA[
 		select no,
@@ -64,12 +91,6 @@
 		 where no=#{no }			
 		]]>
 	</select>
-	
-	<select id="selectCount" resultType="long" >
-		<![CDATA[
-		select count(*) from board
-		]]>
-	</select>	
 	
 	<delete id="delete" parameterType="map">
 		<![CDATA[
