@@ -2,7 +2,7 @@
 
 /* reset */
 *				{ margin:0; padding:0 }
-body			{ font:0.75em "맑은 고딕", 돋움, 굴림; text-align:center; color:#666 }
+body			{ font:0.75em "맑은 고딕", 돋움, 굴림; text-align:center; color:#333 }
 ul, ol			{ list-style-type: none }
 
 /* layout */

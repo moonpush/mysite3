@@ -12,16 +12,24 @@ public class GuestbookDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public void delete( GuestbookVo vo ) {
-		sqlSession.delete( "guestbook.delete", vo );
+	public int delete( GuestbookVo vo ) {
+		return sqlSession.delete( "guestbook.delete", vo );
 	}
 	
-	public void insert( GuestbookVo vo ) {
+	public GuestbookVo insert( GuestbookVo vo ) {
 		sqlSession.insert( "guestbook.insert", vo );
+		GuestbookVo guestbookVo = sqlSession.selectOne( "guestbook.selectbyno", vo.getNo() );
+		
+		return guestbookVo;
 	}
 	
 	public List<GuestbookVo> getList() {
-		List<GuestbookVo> list = sqlSession.selectList( "guestbook.list" );
+		List<GuestbookVo> list = sqlSession.selectList( "guestbook.select" );
 		return list;
 	}
+	
+	public List<GuestbookVo> getList( Long page ) {
+		List<GuestbookVo> list = sqlSession.selectList( "guestbook.selectbypage", page );
+		return list;
+	}	
 }

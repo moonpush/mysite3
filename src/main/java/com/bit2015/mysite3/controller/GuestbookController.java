@@ -21,7 +21,7 @@ public class GuestbookController {
 	
 	@RequestMapping( "" )
 	public String list( Model model ) {
-		List<GuestbookVo> list = guestbookService.listMessage();
+		List<GuestbookVo> list = guestbookService.listMessage( 1L );
 		model.addAttribute( "list", list );
 		return "/guestbook/list";
 	}

@@ -14,16 +14,22 @@ public class GuestbookService {
 	@Autowired
 	private GuestbookDao guestbookDao;
 	
-	public void writeMessage( GuestbookVo vo ) {
-		guestbookDao.insert( vo );
+	public GuestbookVo writeMessage( GuestbookVo vo ) {
+		return guestbookDao.insert( vo );
 	}
 	
-	public void deleteMessage( GuestbookVo vo ) {
-		guestbookDao.delete( vo );
+	public boolean deleteMessage( GuestbookVo vo ) {
+		int count = guestbookDao.delete( vo );
+		return count == 1;
 	}
 	
 	public List<GuestbookVo> listMessage() {
 		List<GuestbookVo> list = guestbookDao.getList();
 		return list;
 	}
+	
+	public List<GuestbookVo> listMessage( Long page ) {
+		List<GuestbookVo> list = guestbookDao.getList( page );
+		return list;
+	}	
 }

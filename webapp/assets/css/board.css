@@ -142,10 +142,10 @@ a.del	{
 #board .pager				{ width:100%; text-align:center; padding:10px 0 0 0 }
 #board .pager ul			{ margin:0 auto }
 #board .pager ul li			{ color:#ff1e1e; display:inline; margin-left:15px; font-weight:bold; font-family: '돋움',dotum,Helvetica,sans-serif; }
-#board .pager ul li.disable	{ color:#dfdfdf }
+#board .pager ul li.disable	{ color:#c8c8c8 }
 #board .pager a:link,
 #board .pager a:visited,
 #board .pager a:active,
-#board .pager a:hover { color:#666; text-decoration:none }
+#board .pager a:hover { color:#333; text-decoration:none }
 
 	
